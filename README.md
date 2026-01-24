@@ -26,6 +26,9 @@ This is a **full-stack application** with separate frontend and backend:
 
 The frontend communicates with the backend via HTTP API calls.
 
+## Dataset 
+Chunked dataset in json form: https://drive.google.com/drive/folders/1-NaRLrjlMMW56ATTwXB5FYV84EjTOALT
+
 ## Prerequisites
 
 -   Python 3.8+
