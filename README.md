@@ -220,7 +220,9 @@ Starter files are already created in `backend/` with TODO comments. Open each fi
 
 ---
 
-## STEP 1: Upload Pre-computed Embeddings to Qdrant Cloud
+### Choose one of the following options:
+
+## STEP 1 a: Upload Pre-computed Embeddings to Qdrant Cloud
 
 We provide pre-computed embeddings using **BAAI/bge-large-en-v1.5** model (1024 dimensions) to avoid rate limiting issues and speed up the process.
 drive link: https://drive.google.com/file/d/1kJwXIe5mc-nI_ga-b6KFAW33-MHucSqE/view?usp=drive_link
@@ -235,7 +237,7 @@ cd backend
 python upload_from_npz.py --recreate
 ```
 
-This takes ~2 minutes (no API calls for embeddings). The `--recreate` flag deletes any existing collection and starts fresh.
+This takes ~5 minutes (no API calls for embeddings). The `--recreate` flag deletes any existing collection and starts fresh.
 
 **What it does:**
 - Loads 11,008 chunks from `chunks.json`
@@ -243,6 +245,15 @@ This takes ~2 minutes (no API calls for embeddings). The `--recreate` flag delet
 - Creates Qdrant collection with 1024-dimensional vectors
 - Uploads all chunks with embeddings in batches
 
+## Step 1 b: Upload Chunks to Qdrant Cloud by creating embedding using openrouter
+
+Use `upload_to_qdrant.py` to upload chunks to Qdrant Cloud by creating embedding using openrouter BAAI_bge_large_en_v1.5 model. Make sure the embedding model is BAAI_bge_large_en_v1.5.
+
+**Run once to upload:**
+```bash
+cd backend
+python upload_to_qdrant.py --recreate
+```
 ---
 
 ## STEP 2: Implement Retrieval Pipeline
