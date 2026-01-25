@@ -223,6 +223,7 @@ Starter files are already created in `backend/` with TODO comments. Open each fi
 ## STEP 1: Upload Pre-computed Embeddings to Qdrant Cloud
 
 We provide pre-computed embeddings using **BAAI/bge-large-en-v1.5** model (1024 dimensions) to avoid rate limiting issues and speed up the process.
+drive link: https://drive.google.com/file/d/1kJwXIe5mc-nI_ga-b6KFAW33-MHucSqE/view?usp=drive_link
 
 **File: `backend/upload_from_npz.py`**
 
