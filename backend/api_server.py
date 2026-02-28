@@ -33,7 +33,8 @@ try:
 except ImportError:
     pass
 
-from test_backend_integration import RAGGenerator, GenerationConfig, SYSTEM_PROMPT
+# from test_backend_integration import RAGGenerator, GenerationConfig, SYSTEM_PROMPT
+from rag_generate import RAGGenerator, GenerationConfig, SYSTEM_PROMPT
 
 
 # Global instances
@@ -54,10 +55,8 @@ async def lifespan(app: FastAPI):
     print("="*60)
     
     config = GenerationConfig(
-        llm_provider="openai",
         retrieval_top_k=8,
         refine_query=True,
-        use_reranker=True
     )
     
     rag_generator = RAGGenerator(config)
@@ -267,7 +266,8 @@ IMPORTANT: You have been provided with {len(results)} paper excerpts. Make sure 
             json=payload,
             stream=True
         )
-        
+
+
         answer_chunks = []
         for line in response.iter_lines():
             if line:
@@ -284,14 +284,14 @@ IMPORTANT: You have been provided with {len(results)} paper excerpts. Make sure 
                             yield emit("chunk", {"content": content})
                     except json.JSONDecodeError:
                         continue
-        
+
         answer = "".join(answer_chunks)
         
         # Stage 4: Complete
         processing_time = time.time() - start_time
         yield emit("complete", {
             "answer": answer,
-            "sources": list(sources_metadata.values()),
+            "sources": sources_metadata,
             "refined_query": refined if refined != query else None,
             "processing_time": processing_time
         })
@@ -489,7 +489,7 @@ IMPORTANT: You have been provided with {len(results)} paper excerpts. Make sure 
         await websocket.send_json({
             "type": "complete",
             "answer": answer,
-            "sources": list(sources_metadata.values()),
+            "sources": sources_metadata,
             "refined_query": refined if refined != query else None,
             "processing_time": processing_time
         })
